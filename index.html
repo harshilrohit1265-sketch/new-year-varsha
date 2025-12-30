@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy New Year Varsha 🎉</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1rem;
+  max-width: 90%;
+}
+
+button {
+  margin-top: 25px;
+  padding: 12px 30px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  background: white;
+  color: #ff5f6d;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.doodles {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.photos img {
+  width: 90px;
+  height: 90px;
+  border-radius: 15px;
+  margin: 8px;
+  border: 2px solid white;
+}
+
+.checkbox-group {
+  text-align: left;
+  font-size: 1rem;
+}
+
+#countdown {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.time-box {
+  background: rgba(255,255,255,0.25);
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 60px;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<!-- Slide 1 -->
+<div class="slide active">
+  <div class="doodles">🎉🎆✨🎈</div>
+  <h1>Welcome Varsha 💖</h1>
+  <p>A beautiful New Year surprise just for you</p>
+  <button onclick="nextSlide()">Press to Continue</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+  <h1>New Year Countdown ⏳</h1>
+  <p>Counting every second to welcome the New Year 🎊</p>
+
+  <div id="countdown">
+    <div class="time-box"><span id="days">00</span><br>Days</div>
+    <div class="time-box"><span id="hours">00</span><br>Hours</div>
+    <div class="time-box"><span id="minutes">00</span><br>Minutes</div>
+    <div class="time-box"><span id="seconds">00</span><br>Seconds</div>
+  </div>
+
+  <button onclick="nextSlide()">Next</button>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide">
+  <h1>New Year Goals 🌸</h1>
+  <div class="checkbox-group">
+    <label><input type="checkbox"> Smile more 😊</label><br><br>
+    <label><input type="checkbox"> New memories 🌍</label><br><br>
+    <label><input type="checkbox"> Achieve dreams ⭐</label><br><br>
+    <label><input type="checkbox"> Stay happy 💕</label>
+  </div>
+  <button onclick="nextSlide()">Continue</button>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide">
+  <h1>Happy New Year Varsha 🎊</h1>
+  <p>
+    May your year be filled with love, laughter,  
+    success and endless happiness ✨
+  </p>
+  <button onclick="nextSlide()">Final Step</button>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide">
+  <h1>Upload a Special Memory 📸</h1>
+  <p>Start this year with a beautiful moment</p>
+  <input type="file" accept="image/*">
+  <button onclick="alert('Happy New Year Varsha 🎉')">Submit</button>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide++;
+  if (currentSlide < slides.length) {
+    slides[currentSlide].classList.add('active');
+  }
+}
+
+/* COUNTDOWN */
+const newYear = new Date(new Date().getFullYear() + 1, 0, 1).getTime();
+
+const timer = setInterval(() => {
+  const now = new Date().getTime();
+  const diff = newYear - now;
+
+  if (diff <= 0) {
+    clearInterval(timer);
+    startFireworks();
+    return;
+  }
+
+  document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
+  document.getElementById("hours").innerText = Math.floor((diff / (1000*60*60)) % 24);
+  document.getElementById("minutes").innerText = Math.floor((diff / (1000*60)) % 60);
+  document.getElementById("seconds").innerText = Math.floor((diff / 1000) % 60);
+}, 1000);
+
+/* FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function startFireworks() {
+  canvas.style.display = "block";
+  setInterval(() => {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+    const radius = Math.random() * 4 + 2;
+
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
+    ctx.fill();
+  }, 100);
+}
+</script>
+
+</body>
+</html>
